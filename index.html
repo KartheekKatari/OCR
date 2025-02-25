@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            padding: 20px;
+        }
+        .scene {
+            margin-bottom: 20px;
+        }
+        .options button {
+            display: block;
+            margin: 5px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <div id="scene" class="scene"></div>
+        <div class="options">
+            <button id="option1"></button>
+            <button id="option2"></button>
+            <button id="option3"></button>
+        </div>
+    </div>
+
+    <script>
+        const game = {
+            scenes: {
+                start: {
+                    text: "You find yourself in a magical forest. There are three paths ahead.",
+                    options: {
+                        option1: { text: "Take the left path", next: "left_path" },
+                        option2: { text: "Take the middle path", next: "middle_path" },
+                        option3: { text: "Take the right path", next: "right_path" }
+                    }
+                },
+                left_path: {
+                    text: "The left path leads to a beautiful lake with swans. Do you...",
+                    options: {
+                        option1: { text: "Feed the swans", next: "feed_swans" },
+                        option2: { text: "Sit by the lake", next: "sit_by_lake" },
+                        option3: { text: "Return to the start", next: "start" }
+                    }
+                },
+                middle_path: {
+                    text: "The middle path leads to a cozy cottage. Do you...",
+                    options: {
+                        option1: { text: "Knock on the door", next: "knock_door" },
+                        option2: { text: "Peek through the window", next: "peek_window" },
+                        option3: { text: "Return to the start", next: "start" }
+                    }
+                },
+                right_path: {
+                    text: "The right path leads to a dark cave. Do you...",
+                    options: {
+                        option1: { text: "Enter the cave", next: "enter_cave" },
+                        option2: { text: "Look for another path", next: "look_another_path" },
+                        option3: { text: "Return to the start", next: "start" }
+                    }
+                },
+                feed_swans: { text: "The swans are happy and you feel at peace. The end." },
+                sit_by_lake: { text: "You enjoy the tranquility of the lake. The end." },
+                knock_door: { text: "A friendly wizard opens the door and offers you tea. The end." },
+                peek_window: { text: "You see a warm fire inside. The end." },
+                enter_cave: { text: "You find a hidden treasure inside the cave! The end." },
+                look_another_path: { text: "You find a secret garden. The end." }
+            }
+        };
+
+        function startGame() {
+            let currentScene = "start";
+
+            function renderScene() {
+                const scene = game.scenes[currentScene];
+                document.getElementById("scene").textContent = scene.text;
+                document.getElementById("option1").textContent = scene.options.option1.text;
+                document.getElementById("option2").textContent = scene.options.option2.text;
+                document.getElementById("option3").textContent = scene.options.option3.text;
+
+                document.getElementById("option1").onclick = () => {
+                    currentScene = scene.options.option1.next;
+                    renderScene();
+                };
+                document.getElementById("option2").onclick = () => {
+                    currentScene = scene.options.option2.next;
+                    renderScene();
+                };
+                document.getElementById("option3").onclick = () => {
+                    currentScene = scene.options.option3.next;
+                    renderScene();
+                };
+            }
+            renderScene();
+        }
+
+        startGame();
+    </script>
+</body>
+</html>
